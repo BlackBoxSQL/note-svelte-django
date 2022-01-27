@@ -1,0 +1,4 @@
+{
+  "python.formatting.provider": "black",
+  "svelte.plugin.svelte.format.enable": true
+}

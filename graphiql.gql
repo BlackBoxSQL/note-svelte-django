@@ -1,0 +1,59 @@
+query all_note {
+  allNote {
+    id
+    title
+    memo
+    created
+    datecompleted
+    done
+  }
+}
+
+query all_note_by_id($idd: Int!) {
+  noteById(id: $idd) {
+    id
+    title
+    memo
+    created
+    datecompleted
+    done
+  }
+}
+
+mutation create_note($title: String!, $memo: String!) {
+  createNote(title: $title, memo: $memo) {
+    note {
+      id
+      title
+      memo
+      created
+      datecompleted
+      done
+    }
+  }
+}
+
+mutation update_note($tittle: String!, $memoo: String!, $iddd: Int!) {
+  updateNote(id: $iddd, title: $tittle, memo: $memoo) {
+    note {
+      id
+      title
+      memo
+      created
+      datecompleted
+      done
+    }
+  }
+}
+mutation {
+  updateNote(id: 15, input: { title: "I now", done: true, memo: " " }) {
+    note {
+      id
+      title
+      memo
+      created
+      datecompleted
+      done
+    }
+  }
+}
