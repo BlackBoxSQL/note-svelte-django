@@ -5,13 +5,15 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-# class ExtendUser(AbstractUser):
-#     email = models.EmailField(blank=False, max_length=254, verbose_name="email address")
-#     USERNAME_FIELD = "username"  # e.g: "username", "email"
-#     EMAIL_FIELD = "email"  # e.g: "email", "primary_email"
 
-# user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+class CustomUser(AbstractUser):
+
+    email = models.EmailField(blank=False, max_length=254, verbose_name="email address")
+
+    USERNAME_FIELD = "username"  # e.g: "username", "email"
+    EMAIL_FIELD = "email"  # e.g: "email", "primary_email"
+
+
 class Note(models.Model):
     title = models.CharField(max_length=100)
     memo = models.TextField(blank=True)

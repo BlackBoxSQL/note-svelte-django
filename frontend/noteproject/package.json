@@ -35,12 +35,13 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@apollo/client": "^3.5.6",
+		"@apollo/client": "^3.5.8",
 		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.35",
 		"apollo-boost": "^0.4.9",
 		"daisyui": "^1.21.0",
-		"graphql": "^16.2.0",
+		"graphql": "^16.3.0",
 		"svelte-apollo": "^0.4.0",
+		"svelte-apollo-client": "^0.1.4",
 		"svelte-awesome": "^2.4.2"
 	}
 }

@@ -1,15 +1,21 @@
 <script lang="ts">
 	import NoteContain from '../components/molecules/NoteContain.svelte';
 	import '../app.css';
-	// import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-	// import { setClient, query } from 'svelte-apollo';
-	// const client = new ApolloClient({
-	// 	ssrMode: true,
-	// 	link: new HttpLink({ uri: '/graphql', fetch }),
-	// 	uri: 'http://127.0.0.1:8000/graphql',
-	// 	cache: new InMemoryCache()
-	// });
-	// setClient(client);
+	import { GET_ALL_NOTES } from '../queries/noteQueries';
+	import { gql } from '@apollo/client/core';
+	import { client } from '../client';
+	const notes = client.query(gql`
+		{
+			allNote {
+				id
+				title
+				memo
+				created
+				complete
+				important
+			}
+		}
+	`);
 </script>
 
 <svelte:head>
@@ -67,7 +73,19 @@
 			</div>
 		</div>
 	</div>
-	<NoteContain />
+	{#if notes}
+		{#if $notes.loading}
+			Loading...
+		{:else if $notes.error}
+			Error: {$notes.error.message}
+		{:else}
+			{#each $notes.data.allNote as note}
+				<h2>{note.title}</h2>
+				<br />
+				<p>{note.memo}</p>
+			{/each}
+		{/if}
+	{/if}
 </div>
 
 <style>
