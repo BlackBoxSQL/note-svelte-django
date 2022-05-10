@@ -4,22 +4,10 @@
 	import { GET_ALL_NOTES } from '../queries/noteQueries';
 	import { gql } from '@apollo/client/core';
 	import { client } from '../client';
-	const notes = client.query(gql`
-		{
-			allNote {
-				id
-				title
-				memo
-				created
-				complete
-				important
-			}
-		}
-	`);
 </script>
 
 <svelte:head>
-	<title>CuTodo</title>
+	<title>Notium</title>
 </svelte:head>
 <div class="container selection:bg-primary selection:text-secondary antialiased">
 	<div class="nav font-bold">
@@ -29,7 +17,7 @@
 		<div class="links-menu">
 			<a href="/">all</a>
 			<a href="/complete">complete</a>
-			<a href="/incomplete">incomplete</a>
+			<a href="/important">important</a>
 		</div>
 		<div class="exit">
 			<a href="/auth/login"><img src="/exit.svg" alt="" /></a>
@@ -53,7 +41,7 @@
 						<span class="label-text text-primary bg-secondary ">Memo</span>
 					</label>
 					<textarea
-						class="text-primary bg-secondary textarea h-30 textarea h-24 textareaa textarea-ghost font-thin"
+						class="text-primary bg-secondary textarea h-30 h-24 textareaa textarea-ghost font-thin"
 						placeholder="Write here ..."
 					/>
 
@@ -73,19 +61,6 @@
 			</div>
 		</div>
 	</div>
-	{#if notes}
-		{#if $notes.loading}
-			Loading...
-		{:else if $notes.error}
-			Error: {$notes.error.message}
-		{:else}
-			{#each $notes.data.allNote as note}
-				<h2>{note.title}</h2>
-				<br />
-				<p>{note.memo}</p>
-			{/each}
-		{/if}
-	{/if}
 </div>
 
 <style>
