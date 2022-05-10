@@ -1,6 +1,7 @@
 module.exports = {
 
-	// add this section #FF6400 20C20E
+	// add this section #FF6400 20C20E primary: '#FF6400',
+	// secondary: '#32292F' #B6C649
 
 	purge: ['./src/**/*.html', './src/**/*.svelte'],
 	darkMode: false, // or 'media' or 'class'

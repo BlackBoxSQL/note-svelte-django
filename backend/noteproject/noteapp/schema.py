@@ -13,7 +13,6 @@ class NoteType(DjangoObjectType):
 
 
 class Query(UserQuery, MeQuery, graphene.ObjectType):
-
     all_note = graphene.List(NoteType)
 
     def resolve_all_note(root, info):

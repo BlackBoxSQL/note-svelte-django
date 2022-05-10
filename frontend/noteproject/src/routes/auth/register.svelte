@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Register--CuTodo</title>
+	<title>Register--Notium</title>
 </svelte:head>
 
 <div class="flex items-center justify-center min-h-screen bg-secondary text-primary">

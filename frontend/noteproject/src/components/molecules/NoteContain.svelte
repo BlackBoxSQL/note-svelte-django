@@ -32,6 +32,7 @@
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
+		/*background: #ff6400;*/
 		background: #ff6400;
 		border-radius: 10px;
 	}

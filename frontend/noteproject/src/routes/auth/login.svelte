@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Login--CuTodo</title>
+	<title>Login--Notium</title>
 </svelte:head>
 
 <div class="flex items-center justify-center min-h-screen bg-secondary text-primary">
