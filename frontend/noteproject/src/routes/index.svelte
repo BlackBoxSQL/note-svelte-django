@@ -3,7 +3,8 @@
 	import '../app.css';
 	import { GET_ALL_NOTES } from '../queries/noteQueries';
 	import { gql } from '@apollo/client/core';
-	import { client } from '../client';
+	import { client } from '../lib/client';
+	import { onMount } from 'svelte';
 </script>
 
 <svelte:head>
