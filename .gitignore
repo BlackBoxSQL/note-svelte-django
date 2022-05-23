@@ -397,7 +397,8 @@ dist
 
 .svelte-kit/
 package
-
+# dependencies
+/node_modules
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
