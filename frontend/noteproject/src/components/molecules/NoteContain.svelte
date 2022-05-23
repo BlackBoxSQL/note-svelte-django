@@ -1,9 +1,17 @@
 <script lang="ts">
+	import Complete from './../../routes/complete.svelte';
 	import Note from './Note.svelte';
 	import '../../app.css';
 </script>
 
 <div class="main overflow-auto pt-8 grid grid-cols-2 gap-3 py-10 pr-8 bg-secondary text-primary">
+	<Note />
+	<Note />
+	<Note />
+	<Note />
+	<Note />
+	<Note />
+	<Note />
 	<Note />
 	<Note />
 	<Note />

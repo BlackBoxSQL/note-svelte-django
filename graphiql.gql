@@ -1,76 +1,34 @@
-query all_note {
-  allNote {
-    id
-    title
-    memo
-    created
-    datecompleted
-    done
-  }
-  p
-}
+<script context="module">
+  import { request, gql } from "graphql-request";
 
-query all_note_by_id($idd: Int!) {
-  noteById(id: $idd) {
-    id
-    title
-    memo
-    created
-    datecompleted
-    done
-  }
-}
-
-mutation create_note($title: String!, $memo: String!) {
-  createNote(title: $title, memo: $memo) {
-    note {
-      id
-      title
-      memo
-      created
-      datecompleted
-      done
-    }
-  }
-}
-
-mutation update_note($tittle: String!, $memoo: String!, $iddd: Int!) {
-  updateNote(id: $iddd, title: $tittle, memo: $memoo) {
-    note {
-      id
-      title
-      memo
-      created
-      datecompleted
-      done
-    }
-  }
-}
-
-mutation {
-  updateNote(id: 15, input: { title: "I now", done: true, memo: " " }) {
-    note {
-      id
-      title
-      memo
-      created
-      datecompleted
-      done
-    }
-  }
-}
-{
-  "data": {
-    "tokenAuth": {
-      "success": true,
-      "errors": null,
-      "unarchiving": false,
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im5ld191c2VyNiIsImV4cCI6MTY0MzM3MjM0Miwib3JpZ0lhdCI6MTY0MzM3MjA0Mn0.jVC31rjFivortmhll4vMNrlPx7nJ0Y366LKYzvOU7Pk",
-      "refreshToken": "075274c5247abbca526d93ed0d643b4c5a58e490",
-      "user": {
-        "id": "VXNlck5vZGU6Ng==",
-        "username": "new_user6"
+  const query = gql`
+    {
+      countries {
+        name
+        emoji
       }
     }
-  }
-}
+  `;
+
+  export const load = async () => {
+    const data = await request("https://countries.trevorblades.com/", query);
+
+    return {
+      props: {
+        data,
+      },
+    };
+  };
+</script>
+
+<script>
+  export let data;
+</script>
+
+<!-- {JSON.stringify(data)} -->
+
+<h1>Countries</h1>
+
+{#each data.countries as { name, emoji }}
+  <p>{emoji} {name}</p>
+{/each}

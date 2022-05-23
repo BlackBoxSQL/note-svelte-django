@@ -1,5 +1,5 @@
 {
   "python.formatting.provider": "black",
   "svelte.plugin.svelte.format.enable": true,
-  "python.defaultInterpreterPath": " C:/Users/grayhat/AppData/Local/pypoetry/Cache/virtualenvs/note-ls7WNGwX-py3.10/Scripts/python.exe"
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": false
 }
