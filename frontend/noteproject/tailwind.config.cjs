@@ -1,10 +1,7 @@
 module.exports = {
-
 	// add this section #FF6400 20C20E primary: '#FF6400',
 	// secondary: '#32292F'
-
-	purge: ['./src/**/*.html', './src/**/*.svelte'],
-	darkMode: false, // or 'media' or 'class'
+	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
 			colors: {
@@ -17,6 +14,4 @@ module.exports = {
 		extend: {}
 	},
 	plugins: [require('daisyui')]
-
-
 };
