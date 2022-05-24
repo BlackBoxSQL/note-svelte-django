@@ -32,3 +32,21 @@
 {#each data.countries as { name, emoji }}
   <p>{emoji} {name}</p>
 {/each}
+
+
+
+
+	// let notes;
+	// function getNotes() {
+		// notes = client.query(gql`
+		// 	query GetNotes {
+		// 		allCompleteNotes {
+		// 			title
+		// 			memo
+		// 		}
+		// 	}
+		// `);
+	}
+	// onMount(() => {
+	// 	getNotes();
+	// });

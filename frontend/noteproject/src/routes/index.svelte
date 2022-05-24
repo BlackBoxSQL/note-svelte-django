@@ -2,25 +2,21 @@
 </script>
 
 <script>
+	// @ts-nocheck
+
 	import NoteContain from '../components/molecules/NoteContain.svelte';
 	import '../app.css';
 	import { client } from '$lib/client';
 	import { gql } from '@apollo/client/core';
-	import { onMount } from 'svelte';
-	export let notes = undefined;
-	function getNotes() {
-		notes = client.query(gql`
-			query GetNotes {
-				allCompleteNotes {
-					title
-					memo
-				}
+	import { Jumper } from 'svelte-loading-spinners';
+	let data = client.query(gql`
+		query {
+			allCompleteNotes {
+				title
+				memo
 			}
-		`);
-	}
-	onMount(() => {
-		getNotes();
-	});
+		}
+	`);
 </script>
 
 <svelte:head>
@@ -84,17 +80,18 @@
 		</div>
 	</div>
 	<div>
-		{#if notes}
-			{#if $notes.loading}
-				Loading...
-			{:else if $notes.error}
-				Error: {$notes.error.message}
-			{:else}
-				{#each $notes.data.allCompleteNotes || [] as note}
-					<h2>Title {note.title}</h2>
-					<p>Memo {note.memo}</p>
-				{/each}
-			{/if}
+		{#if $data.loading}
+			<!-- content here -->
+			<Jumper size="60" color="#FF6400" unit="px" duration="1s" />
+		{:else if $data.error}
+			Error {$data.error}
+		{:else}
+			{#each $data.data.allCompleteNotes as note}
+				<!-- content here -->
+				<h2>{note.title}</h2>
+				<h4>{note.memo}</h4>
+			{/each}
+			<!-- else if content here -->
 		{/if}
 	</div>
 </div>
