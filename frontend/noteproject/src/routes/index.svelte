@@ -3,8 +3,6 @@
 
 <script>
 	// @ts-nocheck
-
-	import NoteContain from '../components/molecules/NoteContain.svelte';
 	import '../app.css';
 	import { client } from '$lib/client';
 	import { gql } from '@apollo/client/core';
@@ -79,24 +77,72 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		{#if $data.loading}
-			<!-- content here -->
-			<Jumper size="60" color="#FF6400" unit="px" duration="1s" />
-		{:else if $data.error}
-			Error {$data.error}
-		{:else}
-			{#each $data.data.allCompleteNotes as note}
-				<!-- content here -->
-				<h2>{note.title}</h2>
-				<h4>{note.memo}</h4>
-			{/each}
-			<!-- else if content here -->
-		{/if}
+	<!-- note space -->
+	<div class="main overflow-auto pt-8 grid grid-cols-3 gap-3 py-10 pr-8 bg-secondary text-primary">
+		<!-- for each -->
+		<div
+			class="h-fit w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary"
+		>
+			<div class="flex justify-between time font-extralight text-xs font-mono">
+				<p class="flex justify-between align-baseline">
+					<i><img src="/bolt.svg" alt="" width="14" height="14" class="pr-0.5 pointer" /></i>
+				</p>
+				<button type="submit">
+					<img src="/notdone.svg" alt="" width="22" height="22" class="px-0.5" />
+				</button>
+			</div>
+			<div>
+				<h3 class="font-bold font-sans">Need to pick up Zara from School</h3>
+			</div>
+			<div>
+				<p class="text-sm pt-1 font-thin font-sans">
+					I Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet mollitia, eius sunt aut
+					cupiditate saepe ut voluptates ad neque aperiam consectetur officia quia fugiat sequi
+					quis, soluta, dolorem repellendus qui?
+				</p>
+			</div>
+			<div class="flex justify-end gap-2">
+				<button type="submit">
+					<img src="/edit.svg" alt="" width="20" height="20" class="px-0.5" />
+				</button>
+				<button type="submit">
+					<img src="/trash-alt.svg" alt="" width="18" height="18" class="px-0.5" />
+				</button>
+			</div>
+		</div>
+		<!--for each -->
 	</div>
+	<!-- note space -->
 </div>
 
 <style>
+	.main {
+		grid-area: main;
+		/* background-color: #32292f; */
+		height: 90vh;
+	}
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px #ffa163;
+		border-radius: 10px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		/*background: #ff6400;*/
+		background: #ff6400;
+		border-radius: 10px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #ff6400;
+	}
 	.container {
 		position: fixed;
 		/* background-color: #32292f; */
