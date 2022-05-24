@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
 
-
 class CustomUser(AbstractUser):
 
     email = models.EmailField(blank=False, max_length=254, verbose_name="email address")
