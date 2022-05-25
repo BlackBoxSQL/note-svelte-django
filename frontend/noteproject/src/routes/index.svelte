@@ -7,11 +7,15 @@
 	import { client } from '$lib/client';
 	import { gql } from '@apollo/client/core';
 	import { Jumper } from 'svelte-loading-spinners';
+	import SaveModel from 'carbon-icons-svelte/lib/SaveModel.svelte';
 	let data = client.query(gql`
 		query {
-			allCompleteNotes {
+			allNotes {
+				created
 				title
 				memo
+				complete
+				important
 			}
 		}
 	`);
@@ -19,94 +23,107 @@
 
 <svelte:head>
 	<title>Notium</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet"
+	/>
 </svelte:head>
-
 <div
 	class="container selection:bg-primary selection:text-secondary antialiased text-primary bg-secondary"
 >
-	<div class="nav font-bold text-primary bg-secondary">
-		<div class="logo text-primary bg-secondary">
-			<img src="/logo2.svg" alt="" />
+	<div class="nav text-primary bg-secondary">
+		<div class="logo text-primary bg-secondary flex justify-end gap-1">
+			<img src="/logo3.svg" alt="" height="26" width="26" />
+			<p class="font-black text-xl">Notium</p>
 		</div>
-		<div class="links-menu text-primary bg-secondary">
+		<div class="links-menu text-primary bg-secondary font-bold text-xl ">
 			<a href="/">all</a>
 			<a href="/complete">complete</a>
 			<a href="/important">important</a>
 		</div>
 		<div class="exit text-primary bg-secondary">
-			<a href="/auth/login"><img src="/exit.svg" alt="" /></a>
+			<a href="/auth/login"><img src="/logout.svg" alt="" height="22" width="22" /></a>
 		</div>
 	</div>
 	<div class="side text-primary bg-secondary">
 		<div class="form bg-secondary">
 			<div class="bg-secondary">
-				<div class="form-control text-primary bg-secondary mx-12 mt-7 font-normal">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span class="label-text text-primary bg-secondary">Title</span>
-					</label>
+				<form class="text-primary bg-secondary grid grid-cols-1 gap-3 content-evenly mx-12 mt-7">
+					<label class="bg-secondary text-base font-semibold" for="title_id">Title</label>
 					<input
+						id="title_id"
 						type="text"
-						placeholder="Title.."
-						class="input todo input-ghost text-primary bg-secondary font-thin"
+						class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
+						placeholder="Title here..."
 					/>
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label text-primary bg-secondary ">
-						<span class="label-text text-primary bg-secondary ">Memo</span>
-					</label>
+					<label class="bg-secondary text-base font-semibold" for="memo_id">Memo</label>
 					<textarea
-						class="text-primary bg-secondary textarea h-30 h-24 textareaa textarea-ghost font-thin"
-						placeholder="Write here ..."
+						id="memo_id"
+						class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
+						rows="5"
+						cols="50"
+						placeholder="Details here...."
 					/>
-
+					<br />
+					<div class="max-w-sm">
+						<label class="inline-flex items-center text-primary text-base font-semibold">
+							<input
+								class="text-primary w-5 h-5 mr-2 focus:primary focus:ring-primary border border-primary rounded"
+								type="checkbox"
+							/>
+							Important
+						</label>
+					</div>
 					<button
-						class="bg-primary text-secondary h-8 rounded-md font-bold mt-4 shadow-sm shadow-primary"
-						>ADD</button
+						class="bg-primary text-secondary rounded-xl font-base text-xl h-8 min-w-full text-center"
+						>Save</button
 					>
-				</div>
+				</form>
 			</div>
 		</div>
-		<div
-			class="footer-frm py-10 grid grid-cols-2 justify-center items-center text-primary bg-secondary"
-		>
-			<div class="cursor-pointer ">
-				<p>Complete <span>23</span></p>
-			</div>
-			<div class="cursor-pointer ">
-				<p>All <span>23</span></p>
-			</div>
+		<div class="footer-frm grid grid-cols-1 text-primary bg-secondary">
+			<p class="text-xs font-thin">
+				Copyright © 2022 all rights reserved by <span class="font-semibold">Notium</span>
+			</p>
 		</div>
 	</div>
 	<!-- note space -->
 	<div class="main overflow-auto pt-8 grid grid-cols-3 gap-3 py-10 pr-8 bg-secondary text-primary">
 		<!-- for each -->
 		<div
-			class="h-fit w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary"
+			class="h-fit max-w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary break-words"
 		>
-			<div class="flex justify-between time font-extralight text-xs font-mono">
+			<div class="flex justify-between font-extralight text-xs font-mono whitespace-pre-line">
 				<p class="flex justify-between align-baseline">
-					<i><img src="/bolt.svg" alt="" width="14" height="14" class="pr-0.5 pointer" /></i>
+					<i><img src="/idea.svg" alt="" width="22" height="22" class="pr-0.5" /></i>
 				</p>
 				<button type="submit">
-					<img src="/notdone.svg" alt="" width="22" height="22" class="px-0.5" />
+					<img src="/task--complete.svg" alt="" width="22" height="22" class="px-0.5" />
 				</button>
 			</div>
 			<div>
-				<h3 class="font-bold font-sans">Need to pick up Zara from School</h3>
+				<p class="text-xs font-extralight">12 Sepeterber, 2021 03:45 PM</p>
 			</div>
 			<div>
-				<p class="text-sm pt-1 font-thin font-sans">
-					I Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet mollitia, eius sunt aut
-					cupiditate saepe ut voluptates ad neque aperiam consectetur officia quia fugiat sequi
-					quis, soluta, dolorem repellendus qui?
+				<h1 class="text-base font-extrabold">Lorem ipsum dolor sit amet consectetur</h1>
+			</div>
+			<div>
+				<p class="text-sm pt-1 font-light">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi adipisci ratione eius
+					mollitia nam maiores, odio, earum nulla porro quisquam aliquam, laudantium deserunt!
+					Molestias mollitia nisi magnam ea architecto. Iste tempora est deserunt excepturi
+					voluptatem ut. Maiores odit quaerat quidem incidunt. Adipisci praesentium non molestias
+					accusamus magni voluptatum sapiente natus?
 				</p>
 			</div>
 			<div class="flex justify-end gap-2">
 				<button type="submit">
-					<img src="/edit.svg" alt="" width="20" height="20" class="px-0.5" />
+					<img src="/request-quote.svg" alt="" width="22" height="22" class="px-0.5" />
 				</button>
 				<button type="submit">
-					<img src="/trash-alt.svg" alt="" width="18" height="18" class="px-0.5" />
+					<img src="/trash-can.svg" alt="" width="22" height="22" class="px-0.5" />
 				</button>
 			</div>
 		</div>
@@ -118,7 +135,6 @@
 <style>
 	.main {
 		grid-area: main;
-		/* background-color: #32292f; */
 		height: 90vh;
 	}
 	/* width */
@@ -128,26 +144,23 @@
 
 	/* Track */
 	::-webkit-scrollbar-track {
-		box-shadow: inset 0 0 5px #ffa163;
+		box-shadow: inset 0 0 5px #6faddc;
 		border-radius: 10px;
 	}
 
 	/* Handle */
 	::-webkit-scrollbar-thumb {
-		/*background: #ff6400;*/
-		background: #ff6400;
+		background: #467599;
 		border-radius: 10px;
 	}
 
 	/* Handle on hover */
 	::-webkit-scrollbar-thumb:hover {
-		background: #ff6400;
+		background: #467599;
 	}
 	.container {
 		position: fixed;
-		/* background-color: #32292f; */
 		max-width: 100vw;
-		/* color: #ff6400; */
 		display: grid;
 		grid-template-columns: 0.8fr 1.2fr 1fr;
 		grid-template-rows: 0.3fr 1.7fr 1fr;
@@ -161,13 +174,12 @@
 
 	.nav {
 		grid-area: nav;
-		/* background-color: #32292f; */
 		height: 60px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin: 0 auto;
-		width: 94%;
+		width: 95%;
 	}
 
 	.side {
@@ -181,16 +193,13 @@
 			'footer-frm';
 		grid-area: side;
 		height: 91vh;
-		/* background-color: #32292f; */
 	}
 
 	.form {
 		grid-area: form;
-		/* background-color: #32292f; */
 	}
 
 	.footer-frm {
-		/* background-color: #32292f; */
 		justify-items: center;
 		align-items: center;
 	}

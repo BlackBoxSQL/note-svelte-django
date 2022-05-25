@@ -4,14 +4,19 @@ module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			fontFamily: {
+				univers: ["'Segoe UI Regular'"],
+			},
 			colors: {
-				primary: '#FF6400',
-				secondary: '#32292F'
+				primary: '#467599',
+				secondary: '#E9FFF9'
 			}
 		}
 	},
 	variants: {
 		extend: {}
 	},
-	plugins: [require('daisyui')]
+	plugins: [
+		require('@tailwindcss/forms'),
+	]
 };

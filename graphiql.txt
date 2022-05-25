@@ -1,0 +1,143 @@
+<script context="module">
+  import { request, gql } from "graphql-request";
+
+  const query = gql`
+    {
+      countries {
+        name
+        emoji
+      }
+    }
+  `;
+
+  export const load = async () => {
+    const data = await request("https://countries.trevorblades.com/", query);
+
+    return {
+      props: {
+        data,
+      },
+    };
+  };
+</script>
+
+<script>
+  export let data;
+</script>
+
+<!-- {JSON.stringify(data)} -->
+
+<h1>Countries</h1>
+
+{#each data.countries as { name, emoji }}
+  <p>{emoji} {name}</p>
+{/each}
+
+
+
+
+	// let notes;
+	// function getNotes() {
+		// notes = client.query(gql`
+		// 	query GetNotes {
+		// 		allCompleteNotes {
+		// 			title
+		// 			memo
+		// 		}
+		// 	}
+		// `);
+	}
+	// onMount(() => {
+	// 	getNotes();
+	// });
+
+
+
+
+
+
+  {#if $data.loading}
+			<!-- content here -->
+			<Jumper size="60" color="#FF6400" unit="px" duration="1s" />
+		{:else if $data.error}
+			Error {$data.error}
+		{:else}
+			{#each $data.data.allCompleteNotes as note}
+				<!-- content here -->
+				<h2>{note.title}</h2>
+				<h4>{note.memo}</h4>
+			{/each}
+			<!-- else if content here -->
+		{/if}
+
+
+
+
+
+<form class="text-primary bg-secondary grid grid-cols-1 gap-3 content-evenly">
+			<label class="bg-secondary text-base font-bold" for="title_id">Title</label>
+			<input
+				id="title_id"
+				type="text"
+				class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
+				placeholder="Title here..."
+			/>
+			<label class="bg-secondary text-base font-bold" for="memo_id">Memo</label>
+			<textarea
+				id="memo_id"
+				class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
+				rows="5"
+				cols="50"
+				placeholder="Details here...."
+			/>
+			<br />
+			<button class="bg-primary text-secondary rounded-xl font-bold text-xl h-8 min-w-full"
+				>Save</button
+			>
+		</form>
+
+##########################################################################################################
+working fine all notes 
+
+
+		{#if $data.loading}
+			<div>
+				<Jumper size="60" color="#467599" unit="px" duration="1s" />
+			</div>
+		{:else if $data.error}
+			Error {$data.error}
+		{:else}
+			{#each $data.data.allNotes as note}
+				<div
+					class="h-fit max-w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary break-words"
+				>
+					<div class="flex justify-between font-extralight text-xs font-mono whitespace-pre-line">
+						<p class="flex justify-between align-baseline">
+							<i><img src="/idea.svg" alt="" width="22" height="22" class="pr-0.5" /></i>
+						</p>
+						<button type="submit">
+							<img src="/task--complete.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+					</div>
+					<div>
+						<p class="text-xs font-extralight">{note.created}</p>
+					</div>
+					<div>
+						<h1 class="text-base font-extrabold">{note.title}</h1>
+					</div>
+					<div>
+						<p class="text-sm pt-1 font-light">
+							{note.memo}
+						</p>
+					</div>
+					<div class="flex justify-end gap-2">
+						<button type="submit">
+							<img src="/request-quote.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+						<button type="submit">
+							<img src="/trash-can.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+					</div>
+				</div>
+			{/each}
+		{/if}
