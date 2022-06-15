@@ -1,5 +1,18 @@
 <script lang="ts">
 	import '../../app.css';
+
+	function tokenAuthGraphQL(username: string, password: string) {
+		return `
+			mutation {
+				tokenAuth(username: "${username}", password: "${password}") {
+					token
+				}
+			}
+		`;
+		let token: string = window.localStorage.getItem('token');
+	}
+
+	tokenAuthGraphQL('hamba', 'pamba');
 </script>
 
 <svelte:head>

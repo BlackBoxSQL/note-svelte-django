@@ -38,7 +38,7 @@
 			<img src="/logo3.svg" alt="" height="26" width="26" />
 			<p class="font-black text-xl">Notium</p>
 		</div>
-		<div class="links-menu text-primary bg-secondary font-bold text-xl ">
+		<div class="links-menu text-primary bg-secondary font-medium text-xl ">
 			<a href="/">all</a>
 			<a href="/complete">complete</a>
 			<a href="/important">important</a>
