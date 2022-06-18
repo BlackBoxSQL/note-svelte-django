@@ -60,6 +60,7 @@
 					/>
 					<label class="bg-secondary text-base font-semibold" for="memo_id">Memo</label>
 					<textarea
+						maxlength="500"
 						id="memo_id"
 						class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
 						rows="5"
@@ -115,7 +116,8 @@
 					mollitia nam maiores, odio, earum nulla porro quisquam aliquam, laudantium deserunt!
 					Molestias mollitia nisi magnam ea architecto. Iste tempora est deserunt excepturi
 					voluptatem ut. Maiores odit quaerat quidem incidunt. Adipisci praesentium non molestias
-					accusamus magni voluptatum sapiente natus?
+					accusamus magni voluptatum sapiente natus?a architecto. Iste tempora est deserunt
+					excepturi voluptatem ut. Maiores odit quaerat qidm incidunt. Adipisci praese ?
 				</p>
 			</div>
 			<div class="flex justify-end gap-2">
