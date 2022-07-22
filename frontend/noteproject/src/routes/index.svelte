@@ -15,7 +15,7 @@
 			}
 		}
 	`);
-	console.log('index');
+	console.log('index page');
 </script>
 
 <svelte:head>

@@ -17,9 +17,10 @@
 		`);
 		//Cookies.set('jwt', loginData.data.tokenAuth.token);
 		localStorage.setItem('token', loginData.data.tokenAuth.token);
-		goto('/');
-		console.log('login');
+		location.href = '/';
+		console.log('login button pressed');
 	}
+	console.log('login page');
 </script>
 
 <svelte:head>
