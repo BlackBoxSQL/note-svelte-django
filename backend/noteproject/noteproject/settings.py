@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "graphql_auth",
     "django_filters",
     "corsheaders",
+    "rest_framework",
     "graphene_django_cud",
     "django_seed",
 ]
@@ -164,3 +165,10 @@ GRAPHQL_JWT = {
 }
 AUTH_USER_MODEL = "noteapp.CustomUser"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}

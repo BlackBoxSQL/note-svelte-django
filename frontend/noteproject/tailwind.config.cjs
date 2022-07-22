@@ -5,7 +5,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				univers: ["'Segoe UI Regular'"],
+				univers: ["'Segoe UI Regular'"]
 			},
 			colors: {
 				primary: '#467599',
@@ -16,7 +16,5 @@ module.exports = {
 	variants: {
 		extend: {}
 	},
-	plugins: [
-		require('@tailwindcss/forms'),
-	]
+	plugins: [require('@tailwindcss/forms')]
 };

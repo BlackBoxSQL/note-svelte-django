@@ -1,10 +1,5 @@
 {
   "python.formatting.provider": "black",
   "svelte.plugin.svelte.format.enable": true,
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": false,
-  "docwriter.progress.trackMethods": true,
-  "docwriter.progress.trackClasses": true,
-  "docwriter.progress.trackTypes": true,
-  "docwriter.progress.trackFunctions": true,
-  "docwriter.style": "Auto-detect"
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": false
 }

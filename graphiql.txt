@@ -141,3 +141,18 @@ working fine all notes
 				</div>
 			{/each}
 		{/if}
+
+
+
+
+	let data = client.query(gql`
+		query {
+			meNotes {
+				created
+				title
+				memo
+				complete
+				important
+			}
+		}
+	`);

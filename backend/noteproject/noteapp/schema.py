@@ -5,6 +5,7 @@ from graphene_django import DjangoObjectType
 from .models import Note
 from graphql_auth.schema import UserQuery, MeQuery
 from graphql_auth import mutations
+from graphql_jwt.decorators import login_required
 
 
 class NoteType(DjangoObjectType):
@@ -25,24 +26,28 @@ class Query(UserQuery, MeQuery, graphene.ObjectType):
 
     me_notes = graphene.List(NoteType)
 
+    @login_required
     def resolve_me_notes(self, info, **kwargs):
         user = info.context.user
         return Note.objects.filter(user=user)
 
     me_notes_complete = graphene.List(NoteType)
 
+    @login_required
     def resolve_me_notes_complete(self, info, **kwargs):
         user = info.context.user
         return Note.objects.filter(user=user, complete=True)
 
     me_notes_important = graphene.List(NoteType)
 
+    @login_required
     def resolve_me_notes_important(self, info, **kwargs):
         user = info.context.user
         return Note.objects.filter(user=user, important=True)
 
     me_notes_today = graphene.List(NoteType)
 
+    @login_required
     def resolve_me_notes_today(self, info, **kwargs):
         user = info.context.user
         return Note.objects.filter(user=user, created__date=datetime.date.today())
@@ -57,6 +62,7 @@ class CreateNote(graphene.Mutation):
 
     note = graphene.Field(NoteType)
 
+    @login_required
     def mutate(self, info, title, memo, complete, important):
         user = info.context.user
         note = Note(
@@ -66,6 +72,30 @@ class CreateNote(graphene.Mutation):
         return CreateNote(note=note)
 
 
+class UpdateNote(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+        title = graphene.String(required=False)
+        memo = graphene.String(required=False)
+        complete = graphene.Boolean(required=False)
+        important = graphene.Boolean(required=False)
+
+    note = graphene.Field(NoteType)
+
+    @login_required
+    def mutate(self, info, id, title, memo, complete, important):
+        user = info.context.user
+        note = Note.objects.get(id=id)
+        if note.user != user:
+            raise Exception("Not authorized to update this note")
+        note.title = title
+        note.memo = memo
+        note.complete = complete
+        note.important = important
+        note.save()
+        return UpdateNote(note=note)
+
+
 class SetNoteComplete(graphene.Mutation):
     class Arguments:
         id = graphene.Int(required=True)
@@ -73,6 +103,7 @@ class SetNoteComplete(graphene.Mutation):
 
     note = graphene.Field(NoteType)
 
+    @login_required
     def mutate(self, info, id, complete):
         user = info.context.user
         note = Note.objects.get(id=id, user=user)
@@ -88,6 +119,7 @@ class SetNoteImportant(graphene.Mutation):
 
     note = graphene.Field(NoteType)
 
+    @login_required
     def mutate(self, info, id, important):
         user = info.context.user
         note = Note.objects.get(id=id, user=user)
@@ -122,6 +154,7 @@ class Mutation(AuthMutation, graphene.ObjectType):
     create_note = CreateNote.Field()
     set_note_complete = SetNoteComplete.Field()
     set_note_important = SetNoteImportant.Field()
+    update_note = UpdateNote.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -1,16 +1,12 @@
-<script context="module">
-</script>
-
-<script>
-	// @ts-nocheck
+<script lang="ts">
 	import '../app.css';
 	import { client } from '$lib/client';
 	import { gql } from '@apollo/client/core';
-	import { Jumper } from 'svelte-loading-spinners';
-	import SaveModel from 'carbon-icons-svelte/lib/SaveModel.svelte';
+	import { goto } from '$app/navigation';
+	//import Cookies from 'js-cookie';
 	let data = client.query(gql`
 		query {
-			allNotes {
+			meNotes {
 				created
 				title
 				memo
@@ -19,12 +15,13 @@
 			}
 		}
 	`);
+	console.log('index');
 </script>
 
 <svelte:head>
 	<title>Notium</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
 	<link
 		href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 		rel="stylesheet"
@@ -44,7 +41,7 @@
 			<a href="/important">important</a>
 		</div>
 		<div class="exit text-primary bg-secondary">
-			<a href="/auth/login"><img src="/logout.svg" alt="" height="22" width="22" /></a>
+			<a href="/login"><img src="/logout.svg" alt="" height="22" width="22" /></a>
 		</div>
 	</div>
 	<div class="side text-primary bg-secondary">
@@ -53,6 +50,7 @@
 				<form class="text-primary bg-secondary grid grid-cols-1 gap-3 content-evenly mx-12 mt-7">
 					<label class="bg-secondary text-base font-semibold" for="title_id">Title</label>
 					<input
+						maxlength="30"
 						id="title_id"
 						type="text"
 						class="border-primary text-primary focus:border-primary focus:text-primary m-0 block w-full rounded border border-solid bg-inherit bg-clip-padding px-3 py-1.5 text-sm font-extralight transition ease-in-out placeholder-shown:bg-inherit focus:bg-inherit focus:font-bold focus:outline-none"
@@ -93,42 +91,46 @@
 	<!-- note space -->
 	<div class="main overflow-auto pt-8 grid grid-cols-3 gap-3 py-10 pr-8 bg-secondary text-primary">
 		<!-- for each -->
-		<div
-			class="h-fit max-w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary break-words"
-		>
-			<div class="flex justify-between font-extralight text-xs font-mono whitespace-pre-line">
-				<p class="flex justify-between align-baseline">
-					<i><img src="/idea.svg" alt="" width="22" height="22" class="pr-0.5" /></i>
-				</p>
-				<button type="submit">
-					<img src="/task--complete.svg" alt="" width="22" height="22" class="px-0.5" />
-				</button>
-			</div>
-			<div>
-				<p class="text-xs font-extralight">12 Sepeterber, 2021 03:45 PM</p>
-			</div>
-			<div>
-				<h1 class="text-base font-extrabold">Lorem ipsum dolor sit amet consectetur</h1>
-			</div>
-			<div>
-				<p class="text-sm pt-1 font-light">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi adipisci ratione eius
-					mollitia nam maiores, odio, earum nulla porro quisquam aliquam, laudantium deserunt!
-					Molestias mollitia nisi magnam ea architecto. Iste tempora est deserunt excepturi
-					voluptatem ut. Maiores odit quaerat quidem incidunt. Adipisci praesentium non molestias
-					accusamus magni voluptatum sapiente natus?a architecto. Iste tempora est deserunt
-					excepturi voluptatem ut. Maiores odit quaerat qidm incidunt. Adipisci praese ?
-				</p>
-			</div>
-			<div class="flex justify-end gap-2">
-				<button type="submit">
-					<img src="/request-quote.svg" alt="" width="22" height="22" class="px-0.5" />
-				</button>
-				<button type="submit">
-					<img src="/trash-can.svg" alt="" width="22" height="22" class="px-0.5" />
-				</button>
-			</div>
-		</div>
+		{#if $data.loading}
+			<div>loading</div>
+		{:else if $data.error}
+			Error {$data.error}
+		{:else}
+			{#each $data.data.meNotes as note}
+				<div
+					class="h-fit max-w-fit px-1 py-1  shadow-md hover:border hover:rounded-md hover:border-primary break-words"
+				>
+					<div class="flex justify-between font-extralight text-xs font-mono whitespace-pre-line">
+						<p class="flex justify-between align-baseline">
+							<i><img src="/idea.svg" alt="" width="22" height="22" class="pr-0.5" /></i>
+						</p>
+						<button type="submit">
+							<img src="/task--complete.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+					</div>
+					<div>
+						<p class="text-xs font-extralight">{note.created}</p>
+					</div>
+					<div>
+						<h1 class="text-base font-extrabold">{note.title}</h1>
+					</div>
+					<div>
+						<p class="text-sm pt-1 font-light">
+							{note.memo}
+						</p>
+					</div>
+					<div class="flex justify-end gap-2">
+						<button type="submit">
+							<img src="/request-quote.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+						<button type="submit">
+							<img src="/trash-can.svg" alt="" width="22" height="22" class="px-0.5" />
+						</button>
+					</div>
+				</div>
+			{/each}
+		{/if}
+
 		<!--for each -->
 	</div>
 	<!-- note space -->

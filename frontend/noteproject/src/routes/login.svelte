@@ -1,9 +1,29 @@
 <script lang="ts">
-	import '../../app.css';
+	import { goto } from '$app/navigation';
+	import { client } from '$lib/client';
+	import { gql } from '@apollo/client/core';
+	import '../app.css';
+	//import Cookies from 'js-cookie';
+
+	let loginData;
+	async function loginUser() {
+		loginData = null;
+		loginData = await client.mutate(gql`
+			mutation {
+				tokenAuth(username: "pinaki", password: "mamba007") {
+					token
+				}
+			}
+		`);
+		//Cookies.set('jwt', loginData.data.tokenAuth.token);
+		localStorage.setItem('token', loginData.data.tokenAuth.token);
+		goto('/');
+		console.log('login');
+	}
 </script>
 
 <svelte:head>
-	<title>Login--Notium</title>
+	<title>Login|Notium</title>
 </svelte:head>
 
 <div class="flex items-center justify-center min-h-screen bg-secondary text-primary">
@@ -30,13 +50,13 @@
 				</svg></a
 			>
 		</div>
-		<form class="my-12 mx-12">
+		<form class="my-12 mx-12" on:submit|preventDefault={loginUser}>
 			<div>
-				<label class="block" for="email"
-					>Email<label>
+				<label class="block" for="username"
+					>Username<label>
 						<input
 							type="text"
-							placeholder="Email"
+							placeholder="Username"
 							class="shadow-md todo w-full px-4 py-2 mt-2 input input-ghost border rounded-md focus:outline-none focus:ring-1 focus:ring-primary bg-secondary"
 						/>
 					</label></label
@@ -56,82 +76,18 @@
 				>
 			</div>
 			<div class="flex items-baseline justify-between">
-				<button
-					type="submit"
-					formaction="/"
-					class="px-6 py-2 mt-4 text-secondary bg-primary rounded-lg font-bold"
-				>
+				<button type="submit" class="px-6 py-2 mt-4 text-secondary bg-primary rounded-lg font-bold">
 					Login</button
 				>
 
 				<!-- svelte-ignore a11y-invalid-attribute -->
 				<a href="/" class="text-sm text-primary hover:underline">Forgot password?</a>
 			</div>
-			<a href="/auth/register" class="text-xs text-primary hover:underline"
-				>New user ? Register NOW!</a
-			>
+			<a href="register" class="text-xs text-primary hover:underline">New user ? Register NOW!</a>
 		</form>
 	</div>
 </div>
 
-<!-- <div class="hero min-h-screen bg-base-200">
-
-<div class="flex-col justify-center hero-content lg:flex-row">
-
-<div class="text-center lg:text-left">
-
-<h1 class="mb-5 text-5xl font-bold">Hello there</h1>
-
-<p class="mb-5">A todo list manager for your life.</p>
-
-</div>
-
-<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-
-<div class="card-body">
-
-<div class="form-control">
-
-<label class="label">
-
-<span class="label-text">Email</span>
-
-</label>
-
-<input type="text" placeholder="email" class="input input-bordered" />
-
-</div>
-
-<div class="form-control">
-
-<label class="label">
-
-<span class="label-text">Password</span>
-
-</label>
-
-<input type="text" placeholder="password" class="input input-bordered" />
-
-<label class="label">
-
-<a href="#" class="label-text-alt">Forgot password?</a>
-
-</label>
-
-</div>
-
-<div class="form-control mt-6">
-
-<input type="button" value="Login" class="btn btn-primary" />
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-    </div> -->
 <style>
 	.todo {
 		color: #ff6400;

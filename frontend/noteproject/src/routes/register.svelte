@@ -1,22 +1,9 @@
 <script lang="ts">
-	import '../../app.css';
-
-	function tokenAuthGraphQL(username: string, password: string) {
-		return `
-			mutation {
-				tokenAuth(username: "${username}", password: "${password}") {
-					token
-				}
-			}
-		`;
-		let token: string = window.localStorage.getItem('token');
-	}
-
-	tokenAuthGraphQL('hamba', 'pamba');
+	import '../app.css';
 </script>
 
 <svelte:head>
-	<title>Register--Notium</title>
+	<title>Register|Notium</title>
 </svelte:head>
 
 <div class="flex items-center justify-center min-h-screen bg-secondary text-primary">
@@ -55,6 +42,15 @@
 							/>
 						</label></label
 					>
+					<label class="block" for="username"
+						>Username<label>
+							<input
+								type="text"
+								placeholder="Username"
+								class="shadow-md todo w-full px-4 py-2 mt-2 input input-ghost border rounded-md focus:outline-none focus:ring-1 focus:ring-primary bg-secondary"
+							/>
+						</label></label
+					>
 				</div>
 				<!-- class="input todo input-ghost text-primary bg-secondary" -->
 				<div class="mt-4">
@@ -66,89 +62,23 @@
 								placeholder="Password"
 								class="shadow-md todo w-full px-4 py-2 mt-2 input input-ghost border rounded-md focus:outline-none focus:ring-1 focus:ring-primary bg-secondary"
 							/>
-							<input
-								type="password"
-								placeholder="Re-type Password"
-								class="shadow-md todo w-full px-4 py-2 mt-2 input input-ghost border rounded-md focus:outline-none focus:ring-1 focus:ring-primary bg-secondary"
-							/>
 						</label></label
 					>
 				</div>
 				<div class="flex items-baseline justify-between">
 					<button
 						type="submit"
-						formaction="/"
 						class="px-6 py-2 mt-4 text-secondary bg-primary rounded-lg font-bold"
 					>
 						Register</button
 					>
 				</div>
-				<a href="/auth/login" class="text-xs text-primary hover:underline"
-					>Already a user ? Login NOW!</a
-				>
+				<a href="login" class="text-xs text-primary hover:underline">Already a user ? Login NOW!</a>
 			</div>
 		</form>
 	</div>
 </div>
 
-<!-- <div class="hero min-h-screen bg-base-200">
-
-<div class="flex-col justify-center hero-content lg:flex-row">
-
-<div class="text-center lg:text-left">
-
-<h1 class="mb-5 text-5xl font-bold">Hello there</h1>
-
-<p class="mb-5">A todo list manager for your life.</p>
-
-</div>
-
-<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-
-<div class="card-body">
-
-<div class="form-control">
-
-<label class="label">
-
-<span class="label-text">Email</span>
-
-</label>
-
-<input type="text" placeholder="email" class="input input-bordered" />
-
-</div>
-
-<div class="form-control">
-
-<label class="label">
-
-<span class="label-text">Password</span>
-
-</label>
-
-<input type="text" placeholder="password" class="input input-bordered" />
-
-<label class="label">
-
-<a href="#" class="label-text-alt">Forgot password?</a>
-
-</label>
-
-</div>
-
-<div class="form-control mt-6">
-
-<input type="button" value="Login" class="btn btn-primary" />
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-    </div> -->
 <style>
 	.todo {
 		color: #ff6400;
